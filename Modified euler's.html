@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Modified Euler’s Method</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css">
+    <style>
+        /* Add a lighter gradient background */
+        body {
+            color: #333; /* Darker text color for contrast */
+            padding: 20px;
+            font-family: 'Consolas', sans-serif;
+            background: linear-gradient(135deg, #a8d8ea 0%, #f0f0f0 100%); /* Lighter gradient */
+            background-size: 400% 400%;
+            animation: gradientBackground 15s ease infinite;
+        }
+
+        /* Keyframes for background animation */
+        @keyframes gradientBackground {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Heading box style */
+        .heading-box {
+            color: #2c3e50; /* Darker color for heading text */
+            padding: 15px;
+            text-align: center;
+            border-radius: 10px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+            margin-bottom: 20px;
+            background-color: #ffffff; /* White background for heading */
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 2.5em;
+            font-weight: bold;
+        }
+
+        /* Style for the code and output boxes */
+        .box {
+            color: #333; /* Dark text color */
+            padding: 15px;
+            font-size: 0.9em;
+            border: 1px solid #ccc; /* Light border */
+            border-radius: 10px;
+            margin: 20px 0;
+            background-color: #ffffff; /* White background for boxes */
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease; /* Smooth hover effect */
+        }
+
+        .box:hover {
+            transform: translateY(-5px); /* Slight upward movement on hover */
+            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2); /* Enhanced shadow on hover */
+        }
+
+        h2 {
+            color: #2c3e50; /* Darker color for subheadings */
+        }
+
+        /* Transparent code background */
+        pre, code {
+            font-family: 'Consolas', Courier, monospace;
+            background-color: transparent;
+        }
+
+        pre {
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="heading-box">
+        <h1> Modified Euler’s Method</h1>
+    </div>
+
+    <h2>Code</h2>
+    <div class="box">
+        <pre><code class="language-c">
+#include &lt;stdio.h&gt; 
+ 
+float func(float x, float y){ 
+    return ((y - x) / (y + x)); 
+} 
+
+float eularCalc(float initX, float initY, float h, float x){ 
+    float yp, yc = initY; 
+    int i = 0; 
+    while (initX+h &lt; x) 
+    { 
+        printf(&quot;Step %d : I = %d\n&quot;, i+1, i); 
+        printf(&quot;X%d = %f, Y%d = %f\n&quot;, i, initX, i, yc); 
+        yp = initY + h * func(initX, yc); 
+        initX += h; 
+        yc = yc + (h/2) * (func(initX-h, yc) + func(initX, yp)); 
+        i++; 
+    } 
+    return yc; 
+} 
+ 
+int main(){ 
+    float x, y, h, val; 
+ 
+    printf(&quot;Enter Initial value of x\n&quot;); 
+    scanf(&quot;%f&quot;, &amp;x); 
+    printf(&quot;Enter Initial value of y\n&quot;); 
+    scanf(&quot;%f&quot;, &amp;y); 
+    printf(&quot;Enter height\n&quot;); 
+    scanf(&quot;%f&quot;, &amp;h); 
+    printf(&quot;Enter value of x to find y\n&quot;); 
+    scanf(&quot;%f&quot;, &amp;val); 
+    printf(&quot;\nValue of Y when x = %f is %f&quot;, val, eularCalc(x, y, h, val)); 
+    return 0; 
+} 
+        </code></pre>
+    </div>
+
+    <h2>Output</h2>
+    <div class="box">
+        <pre>
+            <code class="language-c">
+Enter Initial value of x
+0
+Enter Initial value of y
+1
+Enter height
+0.02
+Enter value of x to find y
+0.1
+Step 1 : I = 0
+X0 = 0.000000, Y0 = 1.000000
+Step 2 : I = 1
+X1 = 0.020000, Y1 = 1.019600
+Step 3: I = 2 
+X2 = 6.000000 Y2 = 1.639231
+
+Step 4: I = 3 
+X3 = 0.060000 Y3 = 1.057748
+
+Step 5: 
+I = 4 
+X4 = 0.080000 Y4 = 1.075601
+
+Value of Y when x = 0.100000 is 1.090912
+
+            </code>
+        </pre>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+    <script>
+        hljs.highlightAll();
+    </script>
+
+</body>
+</html>

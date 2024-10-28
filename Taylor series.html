@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Taylor Series</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css">
+    <style>
+        body {
+            color: #333;
+            padding: 20px;
+            font-family: 'Consolas', sans-serif;
+            background: linear-gradient(135deg, #a8d8ea 0%, #f0f0f0 100%);
+            background-size: 400% 400%;
+            animation: gradientBackground 15s ease infinite;
+        }
+        @keyframes gradientBackground {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        .heading-box {
+            color: #2c3e50;
+            padding: 15px;
+            text-align: center;
+            border-radius: 10px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+            margin-bottom: 20px;
+            background-color: #ffffff;
+        }
+        h1 {
+            margin: 0;
+            font-size: 2.5em;
+            font-weight: bold;
+        }
+        .box {
+            color: #333;
+            padding: 15px;
+            font-size: 0.9em;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            margin: 20px 0;
+            background-color: #ffffff;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        .box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+        }
+        h2 {
+            color: #2c3e50;
+        }
+        pre, code {
+            font-family: 'Consolas', Courier, monospace;
+            background-color: transparent;
+        }
+        pre {
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="heading-box">
+        <h1>Taylor Series</h1>
+    </div>
+
+    <h2>Code</h2>
+    <div class="box">
+        <pre><code class="language-c">
+#include &lt;stdio.h&gt; 
+#include &lt;math.h&gt; 
+#include &lt;stdlib.h&gt; 
+ 
+long fact(int num){ 
+    if (num == 1 || num == 0) 
+        return 1; 
+    return num*fact(num - 1); 
+} 
+ 
+float root(float coeff[], int degree, float x){ 
+    float sum = 0; 
+    for (int i = degree; i &gt;= 0; i--) 
+    { 
+        sum += (coeff[i]*pow(x, i)); 
+    } 
+    return sum; 
+} 
+void der(float *fx, int degree, float coeff[], int temp){ 
+    int i; 
+    for (i = 1; i &lt;= degree; i++, temp++) 
+    { 
+        fx[i-1] = coeff[i]*temp; 
+    } 
+} 
+int main(){ 
+    int degree, i; 
+    float a, b, x, fx[10], coeff[10], temp, h, sol, f_x[10], 
+f__x[10], c, d; 
+    printf(&quot;Enter Highest Degree of Equation:\t&quot;); 
+    scanf(&quot;%d&quot;, &amp;degree); 
+ 
+    temp = 1; 
+    for (i = 0; i &lt;= degree; i++) 
+    { 
+        printf(&quot;Enter Coefficient for x^%d:\t&quot;, i); 
+        scanf(&quot;%f&quot;, &amp;coeff[i]); 
+    } 
+     
+    printf(&quot;\n Entered Equation:\t&quot;); 
+    for (i = degree; i &gt;= 0; i--) 
+    { 
+        if (i == 0) 
+            printf(&quot;(%.4f)&quot;, coeff[i]); 
+        else 
+            printf(&quot;(%.4fx^%d)+&quot;, coeff[i], i); 
+    } 
+    printf(&quot;\n Enter The Value of x :\t&quot;); 
+    scanf(&quot;%f&quot;, &amp;x); 
+    printf(&quot;\n Enter The Value of h :\t&quot;); 
+    scanf(&quot;%f&quot;, &amp;h); 
+ 
+    a = root(coeff, degree, x); 
+    der(fx, degree, coeff, temp); 
+    b = root(fx, degree, x); 
+    der(f_x, degree, fx, temp); 
+    c = root(f_x, degree, x); 
+    der(f__x, degree, f_x, temp); 
+    d = root(f__x, degree, x); 
+    der(f__x, degree, f_x, temp); 
+ 
+    sol = a+((h*b)/fact(1))+((h*h*c)/fact(2))+((h*h*h*d)/fact(3)); 
+    printf(&quot;\nSolution : %.4f&quot;, sol); 
+    return 0; 
+} 
+        </code></pre>
+    </div>
+
+    <h2>Output</h2>
+    <div class="box">
+        <pre>
+            <code class="language-c">
+Enter Highest Degree of Equation:	3
+Enter Coefficient for x^0:	5
+Enter Coefficient for x^1:	-2
+Enter Coefficient for x^2:	0
+Enter Coefficient for x^3:	1
+
+ Entered Equation:	(1.0000x^3)+(0.0000x^2)+(2.0000x^1)+(5.0000)
+ Enter The Value of x :	2
+ Enter The Value of h :	0.001
+
+Solution : 9.0100
+            </code>
+        </pre>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+    <script>
+        hljs.highlightAll();
+    </script>
+
+</body>
+</html>

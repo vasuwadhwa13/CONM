@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Newton Divided Difference Interpolation</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css">
+    <style>
+        /* Add a lighter gradient background */
+        body {
+            color: #333; /* Darker text color for contrast */
+            padding: 20px;
+            font-family: 'Consolas', sans-serif;
+            background: linear-gradient(135deg, #a8d8ea 0%, #f0f0f0 100%); /* Lighter gradient */
+            background-size: 400% 400%;
+            animation: gradientBackground 15s ease infinite;
+        }
+
+        /* Keyframes for background animation */
+        @keyframes gradientBackground {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Heading box style */
+        .heading-box {
+            color: #2c3e50; /* Darker color for heading text */
+            padding: 15px;
+            text-align: center;
+            border-radius: 10px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+            margin-bottom: 20px;
+            background-color: #ffffff; /* White background for heading */
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 2.5em;
+            font-weight: bold;
+        }
+
+        /* Style for the code and output boxes */
+        .box {
+            color: #333; /* Dark text color */
+            padding: 15px;
+            font-size: 0.9em;
+            border: 1px solid #ccc; /* Light border */
+            border-radius: 10px;
+            margin: 20px 0;
+            background-color: #ffffff; /* White background for boxes */
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease; /* Smooth hover effect */
+        }
+
+        .box:hover {
+            transform: translateY(-5px); /* Slight upward movement on hover */
+            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2); /* Enhanced shadow on hover */
+        }
+
+        h2 {
+            color: #2c3e50; /* Darker color for subheadings */
+        }
+
+        /* Transparent code background */
+        pre, code {
+            font-family: 'Consolas', Courier, monospace;
+            background-color: transparent;
+        }
+
+        pre {
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="heading-box">
+        <h1>Newton Divided Difference Interpolation</h1>
+    </div>
+
+    <h2>Code</h2>
+    <div class="box">
+        <pre><code class="language-c">
+#include &lt;stdio.h&gt; 
+
+void calculateCoefficients(double x[], double y[], int n, double coeff[]) { 
+    for (int i = 0; i &lt; n; i++) { 
+        coeff[i] = y[i]; 
+    } 
+    for (int j = 1; j &lt; n; j++) { 
+        for (int i = n - 1; i &gt;= j; i--) { 
+            coeff[i] =(coeff[i] - coeff[i - 1])/(x[i] - x[i - j]); 
+        } 
+    } 
+} 
+
+double interpolate(double x[], double coeff[], int n, double xVal) { 
+    double result = coeff[n - 1]; 
+    for (int i = n - 2; i &gt;= 0; i--) { 
+        result = result * (xVal - x[i]) + coeff[i]; 
+    } 
+    return result; 
+} 
+
+int main() { 
+    int n; 
+    printf(&quot;Enter the number of data points: &quot;); 
+    scanf(&quot;%d&quot;, &amp;n); 
+
+    double x[n], y[n]; 
+    for (int i = 0; i &lt; n; i++) { 
+        printf(&quot;Enter the data points (x, y):\n&quot;); 
+        scanf(&quot;%lf %lf&quot;, &amp;x[i], &amp;y[i]); 
+    } 
+
+    double coeff[n]; 
+    calculateCoefficients(x, y, n, coeff); 
+    printf(&quot;Enter the value to interpolate: &quot;); 
+    double xVal; 
+    scanf(&quot;%lf&quot;, &amp;xVal); 
+    double interpolatedValue = interpolate(x, coeff, n, xVal); 
+    printf(&quot;Interpolated value at %lf is %lf\n&quot;, xVal, interpolatedValue); 
+    return 0; 
+} 
+        </code></pre>
+    </div>
+
+    <h2>Output</h2>
+    <div class="box">
+        <pre>
+            <code class="language-c">
+Enter the number of data points: 3
+
+Enter the data points (x, y): 
+1.5 -0.25
+
+Enter the data points (x, y): 
+3 2
+
+Enter the data points (x, y): 
+6 20
+
+Enter the value to interpolate: 4
+
+Interpolated value at 4.000000 is 6.000000
+
+            </code>
+        </pre>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+    <script>
+        hljs.highlightAll();
+    </script>
+
+</body>
+</html>

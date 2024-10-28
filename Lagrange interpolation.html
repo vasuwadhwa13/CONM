@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Binary to Decimal</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css">
+    <style>
+        /* Add a lighter gradient background */
+        body {
+            color: #333; /* Darker text color for contrast */
+            padding: 20px;
+            font-family: 'Consolas', sans-serif;
+            background: linear-gradient(135deg, #a8d8ea 0%, #f0f0f0 100%); /* Lighter gradient */
+            background-size: 400% 400%;
+            animation: gradientBackground 15s ease infinite;
+        }
+
+        /* Keyframes for background animation */
+        @keyframes gradientBackground {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Heading box style */
+        .heading-box {
+            color: #2c3e50; /* Darker color for heading text */
+            padding: 15px;
+            text-align: center;
+            border-radius: 10px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+            margin-bottom: 20px;
+            background-color: #ffffff; /* White background for heading */
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 2.5em;
+            font-weight: bold;
+        }
+
+        /* Style for the code and output boxes */
+        .box {
+            color: #333; /* Dark text color */
+            padding: 15px;
+            font-size: 0.9em;
+            border: 1px solid #ccc; /* Light border */
+            border-radius: 10px;
+            margin: 20px 0;
+            background-color: #ffffff; /* White background for boxes */
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease; /* Smooth hover effect */
+        }
+
+        .box:hover {
+            transform: translateY(-5px); /* Slight upward movement on hover */
+            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2); /* Enhanced shadow on hover */
+        }
+
+        h2 {
+            color: #2c3e50; /* Darker color for subheadings */
+        }
+
+        /* Transparent code background */
+        pre, code {
+            font-family: 'Consolas', Courier, monospace;
+            background-color: transparent;
+        }
+
+        pre {
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="heading-box">
+        <h1>Lagrange interpolation</h1>
+    </div>
+
+    <h2>Code</h2>
+    <div class="box">
+        <pre><code class="language-c">
+#include&lt;stdio.h&gt; 
+#define max 10 
+
+float lagrangianCalc(float arr[2][max], int n, float x)
+{ 
+float  sum = 0, temp; 
+int i, j; 
+for (i = 0; i &lt; n; i++) 
+{ 
+    temp = 1; 
+    for(j = 0; j &lt; n; j++) 
+    { 
+        if(i != j) 
+            temp *= (x-arr[0][j])/(arr[0][i]-arr[0][j]); 
+    } 
+    sum += (temp*arr[1][i]); 
+} 
+return sum; 
+} 
+
+int main()
+{ 
+float arr[2][max], x; 
+int i, n; 
+    
+printf(&quot;Enter number of intervals (upto 10)&quot;\n); 
+scanf(&quot;%d&quot;, &amp;n); 
+
+if(n &gt; 10 || n &lt;= 0)
+{ 
+    printf(&quot;Invalid intervals&quot;\n); 
+    return 0; 
+} 
+for(i = 0; i &lt; n; i++) 
+{ 
+    printf(&quot;Enter x%d value: \t&quot;, i); 
+    scanf(&quot;%f&quot;, &amp;arr[0][i]); 
+    printf(&quot;Enter y%d value: \t&quot;, i);
+    scanf(&quot;%f&quot;, &amp;arr[1][i]); 
+}
+    printf(&quot;Enter the value of x\t&quot;); 
+    scanf(&quot;%f&quot;, &amp;x); 
+    
+    printf(&quot;y(%f) = %f\n&quot;, x, lagrangianCalc(arr, n, x)); 
+    return 0; 
+}
+            
+        </code></pre>
+    </div>
+
+    <h2>Output</h2>
+    <div class="box">
+        <pre>
+            <code class="language-c">
+Enter numer of intervals (upto 10)
+3
+Enter x0 value:         1
+Enter y0 value:         1
+Enter x1 value:         2
+Enter y1 value:         5
+Enter x2 value:         4
+Enter y2 value:         59
+Enter the value of x    3
+y(3.000000) = 24.333334
+
+</code>
+        </pre>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+    <script>
+        hljs.highlightAll();
+    </script>
+
+</body>
+</html>

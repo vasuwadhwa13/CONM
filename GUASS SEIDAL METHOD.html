@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Binary to Decimal</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css">
+    <style>
+        /* Add a lighter gradient background */
+        body {
+            color: #333; /* Darker text color for contrast */
+            padding: 20px;
+            font-family: 'Consolas', sans-serif;
+            background: linear-gradient(135deg, #a8d8ea 0%, #f0f0f0 100%); /* Lighter gradient */
+            background-size: 400% 400%;
+            animation: gradientBackground 15s ease infinite;
+        }
+
+        /* Keyframes for background animation */
+        @keyframes gradientBackground {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Heading box style */
+        .heading-box {
+            color: #2c3e50; /* Darker color for heading text */
+            padding: 15px;
+            text-align: center;
+            border-radius: 10px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+            margin-bottom: 20px;
+            background-color: #ffffff; /* White background for heading */
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 2.5em;
+            font-weight: bold;
+        }
+
+        /* Style for the code and output boxes */
+        .box {
+            color: #333; /* Dark text color */
+            padding: 15px;
+            font-size: 0.9em;
+            border: 1px solid #ccc; /* Light border */
+            border-radius: 10px;
+            margin: 20px 0;
+            background-color: #ffffff; /* White background for boxes */
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease; /* Smooth hover effect */
+        }
+
+        .box:hover {
+            transform: translateY(-5px); /* Slight upward movement on hover */
+            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2); /* Enhanced shadow on hover */
+        }
+
+        h2 {
+            color: #2c3e50; /* Darker color for subheadings */
+        }
+
+        /* Transparent code background */
+        pre, code {
+            font-family: 'Consolas', Courier, monospace;
+            background-color: transparent;
+        }
+
+        pre {
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="heading-box">
+        <h1>Guass Seidal</h1>
+    </div>
+
+    <h2>Code</h2>
+    <div class="box">
+        <pre><code class="language-c">
+#include &lt;stdio.h&gt;
+
+#define SIZE 10
+
+// Function to perform Gauss-Jordan elimination
+void gaussJordan(float matrix[SIZE][SIZE], int n) {
+    int i, j, k;
+    float ratio;
+
+    for (i = 0; i &lt; n; i++) {
+        if (matrix[i][i] == 0.0) {
+            printf("Mathematical Error: Division by zero detected.\n");
+            return;
+        }
+        for (j = 0; j &lt; n; j++) {
+            if (i != j) {
+                ratio = matrix[j][i] / matrix[i][i];
+                for (k = 0; k &lt;= n; k++) {
+                    matrix[j][k] -= ratio * matrix[i][k];
+                }
+            }
+        }
+    }
+
+    // Obtain solution
+    for (i = 0; i &lt; n; i++) {
+        matrix[i][n] = matrix[i][n] / matrix[i][i];
+        matrix[i][i] = 1;
+    }
+}
+
+int main() {
+    float matrix[SIZE][SIZE];
+    int i, j, n;
+
+    // Input number of variables
+    printf("Enter number of variables: ");
+    scanf("%d", &n);
+
+    // Input the augmented matrix
+    printf("Enter the augmented matrix row-wise:\n");
+    for (i = 0; i &lt; n; i++) {
+        for (j = 0; j &lt;= n; j++) {
+            scanf("%f", &matrix[i][j]);
+        }
+    }
+
+    // Perform Gauss-Jordan elimination
+    gaussJordan(matrix, n);
+
+    // Output the result
+    printf("\nThe solution is:\n");
+    for (i = 0; i &lt; n; i++) {
+        printf("x%d = %.3f\n", i + 1, matrix[i][n]);
+    }
+
+    return 0;
+}
+            
+            
+        </code></pre>
+    </div>
+
+    <h2>Output</h2>
+    <div class="box">
+        <pre>
+            <code class="language-c">
+Enter number of variables: 3
+Enter the augmented matrix row-wise:
+1 2 3 6
+2 1 2 5
+4 2 5 11
+
+The solution is:
+x1 = 1.000
+x2 = 1.000
+x3 = 1.000
+
+--------------------------------
+Process exited after 32.12 seconds with return value 0
+Press any key to continue . . .
+                
+</code>
+        </pre>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+    <script>
+        hljs.highlightAll();
+    </script>
+
+</body>
+</html>
